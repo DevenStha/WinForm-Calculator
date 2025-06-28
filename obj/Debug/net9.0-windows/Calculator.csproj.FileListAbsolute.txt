@@ -14,3 +14,4 @@ C:\personalProjects\Calculator\Calculator\obj\Debug\net9.0-windows\Calculator.pd
 C:\personalProjects\Calculator\Calculator\obj\Debug\net9.0-windows\Calculator.genruntimeconfig.cache
 C:\personalProjects\Calculator\Calculator\obj\Debug\net9.0-windows\ref\Calculator.dll
 C:\personalProjects\Calculator\Calculator\obj\Debug\net9.0-windows\Calculator.Calculator.resources
+C:\personalProjects\Calculator\Calculator\obj\Debug\net9.0-windows\Calculator.sourcelink.json

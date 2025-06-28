@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,10 @@ namespace Calculator
         public Calculator()
         {
             InitializeComponent();
+
+            // Initalize both arraylists
+            //numbersList.Add("0");
+            //operatorsList.Add(null);
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -22,6 +27,14 @@ namespace Calculator
 
         }
 
+        private ArrayList numbersList = new ArrayList();
+        private ArrayList operatorsList = new ArrayList();
+
+        private int numberListIndex = 0;
+        private int operatorsIndex = 0;
+
+        private StringBuilder numbers = new StringBuilder();
+        private StringBuilder operators = new StringBuilder();
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -103,7 +116,26 @@ namespace Calculator
 
         private void buttonEqualTo_Click(object sender, EventArgs e)
         {
-            textBoxResult.Text = "WIP";
+
+            string textBoxArray = textBoxExpression.Text.ToArray;
+            try
+            {
+                foreach(char character in textBoxExpression.Text)
+                {
+                    // because of course I can't directly parse char as they are basically integers !??!?, I think
+                   int tmp = int.Parse(char.ToString(character));
+                   numbers.Append(character);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void seperateNumAndOperators(string text)
+        {
+
         }
 
     }
