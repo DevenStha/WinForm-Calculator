@@ -47,6 +47,7 @@
             buttonC = new Button();
             textBoxExpression = new TextBox();
             textBoxResult = new TextBox();
+            EraseButton = new Button();
             SuspendLayout();
             // 
             // button1
@@ -235,13 +236,23 @@
             textBoxResult.ReadOnly = true;
             textBoxResult.Size = new Size(161, 50);
             textBoxResult.TabIndex = 17;
-            //textBoxResult.TextChanged += textBoxResult_TextChanged;
+            // 
+            // EraseButton
+            // 
+            EraseButton.Location = new Point(54, 122);
+            EraseButton.Name = "EraseButton";
+            EraseButton.Size = new Size(452, 68);
+            EraseButton.TabIndex = 18;
+            EraseButton.Text = "<---";
+            EraseButton.UseVisualStyleBackColor = true;
+            EraseButton.Click += EraseButton_Click;
             // 
             // Calculator
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(EraseButton);
             Controls.Add(textBoxResult);
             Controls.Add(textBoxExpression);
             Controls.Add(buttonC);
@@ -289,5 +300,6 @@
         private Button buttonC;
         private TextBox textBoxExpression;
         private TextBox textBoxResult;
+        private Button EraseButton;
     }
 }

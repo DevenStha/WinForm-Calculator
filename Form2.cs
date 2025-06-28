@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,6 +36,8 @@ namespace Calculator
 
         private StringBuilder numbers = new StringBuilder();
         private StringBuilder operators = new StringBuilder();
+
+        private bool endOfExpression = false;
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -116,27 +119,112 @@ namespace Calculator
 
         private void buttonEqualTo_Click(object sender, EventArgs e)
         {
-
-            string textBoxArray = textBoxExpression.Text.ToArray;
-            try
-            {
-                foreach(char character in textBoxExpression.Text)
-                {
-                    // because of course I can't directly parse char as they are basically integers !??!?, I think
-                   int tmp = int.Parse(char.ToString(character));
-                   numbers.Append(character);
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
+            seperateNumAndOperators(textBoxExpression.Text);
+            calculateExpression(numbersList, operatorsList);
         }
 
         private void seperateNumAndOperators(string text)
         {
+            int index = 0;
+            while (endOfExpression == false)
+            {
+                try
+                {
+                    for (int i = index; i < text.Length; i++)
+                    {
+                        // testing if the data is an valid int
+                        int tmp = int.Parse(char.ToString(text[i]));
+                        numbers.Append(text[i]);
+                        index++;
+                    }
+                }
+                catch (FormatException e)
+                {
+                    if (index < text.Length)
+                    {
+                        index++;
+
+                        // Add operators to the operators list
+                        switch (text[index - 1])
+                        {
+                            case '+':
+                                operatorsList.Add(Operators.Add);
+                                break;
+                            case '-':
+                                operatorsList.Add(Operators.Subtract);
+                                break;
+                            case '*':
+                                operatorsList.Add(Operators.Multiply);
+                                break;
+                            case '/':
+                                operatorsList.Add(Operators.Divide);
+                                break;
+                            default:
+                                textBoxResult.Text = "Error! Invalid Expression!";
+                                index = 0;
+                                numbers.Clear();
+                                numbersList.Clear();
+                                operatorsList.Clear();
+                                endOfExpression = true;
+                                break;
+                        }
+                    }
+
+                    // Add the number to the number lists
+                    numbersList.Add(Convert.ToInt32(numbers.ToString()));
+                    textBoxResult.Text = numbers.ToString();
+                    numbers.Clear();
+
+                }
+                finally
+                {
+                    if (index >= text.Length)
+                    {
+                        endOfExpression = true;
+                        index = 0;
+                    }
+                }
+            }
 
         }
 
+        private void calculateExpression(ArrayList numbers, ArrayList operators)
+        {
+            // very hacky, I think
+            // here I am putting the operators index which has highest priorities as firstIndexes and lower priorities as last indexes
+            // so I will compute from the index starting from the first and eventually reaching the final index
+
+            ArrayList operatorIndexByHierarchy = new ArrayList();
+            operatorIndexByHierarchy.Add(null);
+            for (int index = 0; index < operatorsList.Count; index++)
+            {
+                if (operatorsList[index].Equals(Operators.Multiply) || operatorsList[index].Equals(Operators.Divide))
+                {
+                    operatorIndexByHierarchy.Insert(0, index);
+                }
+                else
+                {
+                    operatorIndexByHierarchy.Add(index);
+                }
+            }
+
+            while (true)
+            {
+
+            }
+        }
+        private void EraseButton_Click(object sender, EventArgs e)
+        {
+
+            // So ^1 doesn't work here
+            try
+            {
+                textBoxExpression.Text = textBoxExpression.Text.Remove(textBoxExpression.Text.Length - 1);
+            }
+            catch(ArgumentOutOfRangeException)
+            {
+            }
+        }
     }
+    public enum Operators { Add = 1, Subtract, Multiply, Divide }
 }
