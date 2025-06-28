@@ -125,9 +125,25 @@ namespace Calculator
 
         private void buttonEqualTo_Click(object sender, EventArgs e)
         {
-            seperateNumAndOperators(textBoxExpression.Text);
-            numbersList.Add(Convert.ToDouble(numbers.ToString()));
-            calculateExpression(numbersList, operatorsList);
+            endOfExpression = false;
+            if (textBoxExpression.Text.Length > 0)
+            {
+                seperateNumAndOperators(textBoxExpression.Text);
+                try
+                {
+                    numbersList.Add(Convert.ToDouble(numbers.ToString()));
+                }
+                catch (Exception)
+                {
+                    textBoxResult.Text = "Invalid Expression.";
+                    HandleError();
+                }
+                calculateExpression(numbersList, operatorsList);
+            }
+            else
+            {
+                textBoxResult.Text = "Empty input";
+            }
 
         }
 
@@ -170,16 +186,25 @@ namespace Calculator
                                 break;
                             default:
                                 index = 0;
+                                HandleError();
                                 break;
                         }
                     }
 
                     if (text[index] != '.')
                     {
-                        // Add the number to the number lists
-                        numbersList.Add(Convert.ToDouble(numbers.ToString()));
-                        //textBoxResult.Text = numbers.ToString();
-                        numbers.Clear();
+                        try
+                        {
+                            // Add the number to the number lists
+                            numbersList.Add(Convert.ToDouble(numbers.ToString()));
+                            //textBoxResult.Text = numbers.ToString();
+                            numbers.Clear();
+                        }
+                        catch (Exception)
+                        {
+                            textBoxResult.Text = "Invalid Expression.";
+                            HandleError();
+                        }
                     }
                     index++;
 
@@ -265,7 +290,6 @@ namespace Calculator
                         numbersList.ReplaceAt(index, var1 + var2);
                         break;
                     default:
-                        ShowError();
                         break;
 
                 }
@@ -280,8 +304,15 @@ namespace Calculator
                 }
                 operatorIndexByHierarchy.RemoveAt(0);
             }
-
-            textBoxResult.Text = numbersList[0].ToString();
+            try
+            {
+                textBoxResult.Text = numbersList[0].ToString();
+            }
+            catch (Exception)
+            {
+                textBoxResult.Text = "Invalid Expression.";
+                HandleError();
+            }
         }
         private void EraseButton_Click(object sender, EventArgs e)
         {
@@ -296,9 +327,8 @@ namespace Calculator
             }
         }
 
-        private void ShowError()
+        private void HandleError()
         {
-            textBoxResult.Text = "Error!, Invalid expression";
             numbers.Clear();
             numbersList.Clear();
             operatorsList.Clear();
