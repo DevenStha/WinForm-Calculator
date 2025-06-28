@@ -146,7 +146,7 @@
             button10.Name = "button10";
             button10.Size = new Size(94, 29);
             button10.TabIndex = 8;
-            button10.Text = "10";
+            button10.Text = "0";
             button10.UseVisualStyleBackColor = true;
             button10.Click += button10_Click;
             // 

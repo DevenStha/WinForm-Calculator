@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
@@ -85,7 +86,7 @@ namespace Calculator
 
         private void button10_Click(object sender, EventArgs e)
         {
-            textBoxExpression.Text += 10;
+            textBoxExpression.Text += 0;
         }
 
         private void buttonDot_Click(object sender, EventArgs e)
@@ -95,6 +96,11 @@ namespace Calculator
         private void buttonC_Click(object sender, EventArgs e)
         {
             textBoxExpression.Text = "";
+            textBoxResult.Text = "";
+            numbers.Clear();
+            numbersList.Clear();
+            operatorsList.Clear();
+            endOfExpression = false;
         }
 
         private void buttonMult_Click(object sender, EventArgs e)
@@ -120,7 +126,9 @@ namespace Calculator
         private void buttonEqualTo_Click(object sender, EventArgs e)
         {
             seperateNumAndOperators(textBoxExpression.Text);
+            numbersList.Add(Convert.ToDouble(numbers.ToString()));
             calculateExpression(numbersList, operatorsList);
+
         }
 
         private void seperateNumAndOperators(string text)
@@ -142,10 +150,8 @@ namespace Calculator
                 {
                     if (index < text.Length)
                     {
-                        index++;
-
                         // Add operators to the operators list
-                        switch (text[index - 1])
+                        switch (text[index])
                         {
                             case '+':
                                 operatorsList.Add(Operators.Add);
@@ -159,21 +165,23 @@ namespace Calculator
                             case '/':
                                 operatorsList.Add(Operators.Divide);
                                 break;
+                            case '.':
+                                numbers.Append(text[index]);
+                                break;
                             default:
-                                textBoxResult.Text = "Error! Invalid Expression!";
                                 index = 0;
-                                numbers.Clear();
-                                numbersList.Clear();
-                                operatorsList.Clear();
-                                endOfExpression = true;
                                 break;
                         }
                     }
 
-                    // Add the number to the number lists
-                    numbersList.Add(Convert.ToInt32(numbers.ToString()));
-                    textBoxResult.Text = numbers.ToString();
-                    numbers.Clear();
+                    if (text[index] != '.')
+                    {
+                        // Add the number to the number lists
+                        numbersList.Add(Convert.ToDouble(numbers.ToString()));
+                        //textBoxResult.Text = numbers.ToString();
+                        numbers.Clear();
+                    }
+                    index++;
 
                 }
                 finally
@@ -193,25 +201,87 @@ namespace Calculator
             // very hacky, I think
             // here I am putting the operators index which has highest priorities as firstIndexes and lower priorities as last indexes
             // so I will compute from the index starting from the first and eventually reaching the final index
+            // definitely very unoptimized, please suggest a better way to compute following the hierarchy
+
 
             ArrayList operatorIndexByHierarchy = new ArrayList();
-            operatorIndexByHierarchy.Add(null);
             for (int index = 0; index < operatorsList.Count; index++)
             {
-                if (operatorsList[index].Equals(Operators.Multiply) || operatorsList[index].Equals(Operators.Divide))
+
+                // divide first priority, multiply second highest priority
+                if (operatorsList[index].Equals(Operators.Divide))
                 {
-                    operatorIndexByHierarchy.Insert(0, index);
+                    if (operatorIndexByHierarchy.Count > 0)
+                    {
+                        operatorIndexByHierarchy.Insert(0, index);
+                    }
+                    else
+                    {
+                        operatorIndexByHierarchy.Add(index);
+                    }
                 }
-                else
+                else if (operatorsList[index].Equals(Operators.Multiply))
                 {
                     operatorIndexByHierarchy.Add(index);
                 }
             }
 
-            while (true)
+            // another loop for adding add and subtract!!!
+            for (int index = 0; index < operatorsList.Count; index++)
             {
-
+                if (operatorsList[index].Equals(Operators.Add) || operatorsList[index].Equals(Operators.Subtract))
+                {
+                    operatorIndexByHierarchy.Add(index);
+                }
             }
+
+            for(int i = 0; i < operatorIndexByHierarchy.Count; i++)
+            {
+                Console.WriteLine(operatorIndexByHierarchy[i]);
+            }
+
+            while (numbersList.Count > 1 && !operatorIndexByHierarchy.Count.Equals(0))
+            {
+                int index = Convert.ToInt32(operatorIndexByHierarchy[0]);
+                int test = 0;
+                for(int i = 0; i < operatorIndexByHierarchy.Count; i++)
+                {
+                    test = Convert.ToInt32(operatorIndexByHierarchy[i]);
+                }
+                double var1 = Convert.ToDouble(numbersList[index]);
+                double var2 = Convert.ToDouble(numbersList[index + 1]);
+                switch (operatorsList[index])
+                {
+                    case Operators.Divide:
+                        numbersList.ReplaceAt(index, var1 / var2);
+                        break;
+                    case Operators.Multiply:
+                        numbersList.ReplaceAt(index, var1 * var2); 
+                        break;
+                    case Operators.Subtract:
+                        numbersList.ReplaceAt(index, var1 - var2);
+                        break;
+                    case Operators.Add:
+                        numbersList.ReplaceAt(index, var1 + var2);
+                        break;
+                    default:
+                        ShowError();
+                        break;
+
+                }
+                numbersList.RemoveAt(index + 1);
+                operatorsList.RemoveAt(index);
+                for (int i = 0; i < operatorIndexByHierarchy.Count; i++)
+                {
+                    if (Convert.ToInt32(operatorIndexByHierarchy[i]) > index)
+                    {
+                        operatorIndexByHierarchy[i] = Convert.ToInt32(operatorIndexByHierarchy[i]) - 1;
+                    }
+                }
+                operatorIndexByHierarchy.RemoveAt(0);
+            }
+
+            textBoxResult.Text = numbersList[0].ToString();
         }
         private void EraseButton_Click(object sender, EventArgs e)
         {
@@ -221,9 +291,26 @@ namespace Calculator
             {
                 textBoxExpression.Text = textBoxExpression.Text.Remove(textBoxExpression.Text.Length - 1);
             }
-            catch(ArgumentOutOfRangeException)
+            catch (ArgumentOutOfRangeException)
             {
             }
+        }
+
+        private void ShowError()
+        {
+            textBoxResult.Text = "Error!, Invalid expression";
+            numbers.Clear();
+            numbersList.Clear();
+            operatorsList.Clear();
+            endOfExpression = true;
+        }
+    }
+
+    public static class ArrayListExtensions
+    {
+        public static void ReplaceAt(this ArrayList array, int index, double value)
+        {
+            array[index] = value;
         }
     }
     public enum Operators { Add = 1, Subtract, Multiply, Divide }
