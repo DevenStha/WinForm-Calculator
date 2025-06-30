@@ -29,14 +29,10 @@ namespace Calculator
 
         }
 
-        private ArrayList numbersList = new ArrayList();
-        private ArrayList operatorsList = new ArrayList();
-
-        private int numberListIndex = 0;
-        private int operatorsIndex = 0;
+        private List<double> numbersList = new List<double>();
+        private List<Operators> operatorsList = new List<Operators>();
 
         private StringBuilder numbers = new StringBuilder();
-        private StringBuilder operators = new StringBuilder();
 
         private bool endOfExpression = false;
 
@@ -226,7 +222,7 @@ namespace Calculator
 
         }
 
-        private void calculateExpression(ArrayList numbers, ArrayList operators)
+        private void calculateExpression(List<double> numbers, List<Operators> operators)
         {
             // very hacky, I think
             // here I am putting the operators index which has highest priorities as firstIndexes and lower priorities as last indexes
@@ -341,9 +337,9 @@ namespace Calculator
         }
     }
 
-    public static class ArrayListExtensions
+    public static class ListExtensions
     {
-        public static void ReplaceAt(this ArrayList array, int index, double value)
+        public static void ReplaceAt(this List<double> array, int index, double value)
         {
             array[index] = value;
         }
