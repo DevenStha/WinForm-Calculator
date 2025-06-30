@@ -52,7 +52,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(43, 261);
+            button1.Location = new Point(59, 374);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 0;
@@ -62,7 +62,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(169, 261);
+            button2.Location = new Point(190, 374);
             button2.Name = "button2";
             button2.Size = new Size(94, 29);
             button2.TabIndex = 1;
@@ -72,7 +72,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(291, 261);
+            button3.Location = new Point(312, 374);
             button3.Name = "button3";
             button3.Size = new Size(94, 29);
             button3.TabIndex = 2;
@@ -82,7 +82,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(412, 261);
+            button4.Location = new Point(59, 310);
             button4.Name = "button4";
             button4.Size = new Size(94, 29);
             button4.TabIndex = 3;
@@ -92,7 +92,7 @@
             // 
             // button5
             // 
-            button5.Location = new Point(43, 301);
+            button5.Location = new Point(190, 310);
             button5.Name = "button5";
             button5.Size = new Size(94, 29);
             button5.TabIndex = 3;
@@ -102,7 +102,7 @@
             // 
             // button6
             // 
-            button6.Location = new Point(169, 301);
+            button6.Location = new Point(312, 310);
             button6.Name = "button6";
             button6.Size = new Size(94, 29);
             button6.TabIndex = 4;
@@ -112,7 +112,7 @@
             // 
             // button7
             // 
-            button7.Location = new Point(291, 301);
+            button7.Location = new Point(59, 243);
             button7.Name = "button7";
             button7.Size = new Size(94, 29);
             button7.TabIndex = 5;
@@ -122,7 +122,7 @@
             // 
             // button8
             // 
-            button8.Location = new Point(412, 301);
+            button8.Location = new Point(190, 243);
             button8.Name = "button8";
             button8.Size = new Size(94, 29);
             button8.TabIndex = 6;
@@ -132,7 +132,7 @@
             // 
             // button9
             // 
-            button9.Location = new Point(43, 354);
+            button9.Location = new Point(312, 243);
             button9.Name = "button9";
             button9.Size = new Size(94, 29);
             button9.TabIndex = 7;
@@ -142,9 +142,9 @@
             // 
             // button10
             // 
-            button10.Location = new Point(169, 354);
+            button10.Location = new Point(59, 433);
             button10.Name = "button10";
-            button10.Size = new Size(94, 29);
+            button10.Size = new Size(225, 29);
             button10.TabIndex = 8;
             button10.Text = "0";
             button10.UseVisualStyleBackColor = true;
@@ -152,7 +152,7 @@
             // 
             // buttonDot
             // 
-            buttonDot.Location = new Point(291, 354);
+            buttonDot.Location = new Point(312, 433);
             buttonDot.Name = "buttonDot";
             buttonDot.Size = new Size(94, 29);
             buttonDot.TabIndex = 9;
@@ -162,7 +162,7 @@
             // 
             // buttonMult
             // 
-            buttonMult.Location = new Point(560, 317);
+            buttonMult.Location = new Point(463, 310);
             buttonMult.Name = "buttonMult";
             buttonMult.Size = new Size(94, 29);
             buttonMult.TabIndex = 10;
@@ -172,7 +172,7 @@
             // 
             // buttonDiv
             // 
-            buttonDiv.Location = new Point(671, 317);
+            buttonDiv.Location = new Point(463, 243);
             buttonDiv.Name = "buttonDiv";
             buttonDiv.Size = new Size(94, 29);
             buttonDiv.TabIndex = 11;
@@ -182,7 +182,7 @@
             // 
             // buttonPlus
             // 
-            buttonPlus.Location = new Point(560, 264);
+            buttonPlus.Location = new Point(463, 433);
             buttonPlus.Name = "buttonPlus";
             buttonPlus.Size = new Size(94, 29);
             buttonPlus.TabIndex = 12;
@@ -192,7 +192,7 @@
             // 
             // buttonMinus
             // 
-            buttonMinus.Location = new Point(671, 264);
+            buttonMinus.Location = new Point(463, 374);
             buttonMinus.Name = "buttonMinus";
             buttonMinus.Size = new Size(94, 29);
             buttonMinus.TabIndex = 13;
@@ -202,9 +202,9 @@
             // 
             // buttonEqualTo
             // 
-            buttonEqualTo.Location = new Point(560, 210);
+            buttonEqualTo.Location = new Point(577, 383);
             buttonEqualTo.Name = "buttonEqualTo";
-            buttonEqualTo.Size = new Size(205, 29);
+            buttonEqualTo.Size = new Size(367, 79);
             buttonEqualTo.TabIndex = 14;
             buttonEqualTo.Text = "=";
             buttonEqualTo.UseVisualStyleBackColor = true;
@@ -212,9 +212,9 @@
             // 
             // buttonC
             // 
-            buttonC.Location = new Point(43, 210);
+            buttonC.Location = new Point(59, 166);
             buttonC.Name = "buttonC";
-            buttonC.Size = new Size(463, 29);
+            buttonC.Size = new Size(347, 53);
             buttonC.TabIndex = 15;
             buttonC.Text = "C";
             buttonC.UseVisualStyleBackColor = true;
@@ -225,23 +225,23 @@
             textBoxExpression.Location = new Point(43, 24);
             textBoxExpression.Multiline = true;
             textBoxExpression.Name = "textBoxExpression";
-            textBoxExpression.Size = new Size(722, 77);
+            textBoxExpression.Size = new Size(901, 77);
             textBoxExpression.TabIndex = 16;
             // 
             // textBoxResult
             // 
-            textBoxResult.Location = new Point(595, 120);
+            textBoxResult.Location = new Point(675, 138);
             textBoxResult.Multiline = true;
             textBoxResult.Name = "textBoxResult";
             textBoxResult.ReadOnly = true;
-            textBoxResult.Size = new Size(161, 50);
+            textBoxResult.Size = new Size(269, 81);
             textBoxResult.TabIndex = 17;
             // 
             // EraseButton
             // 
-            EraseButton.Location = new Point(54, 122);
+            EraseButton.Location = new Point(577, 271);
             EraseButton.Name = "EraseButton";
-            EraseButton.Size = new Size(452, 68);
+            EraseButton.Size = new Size(367, 88);
             EraseButton.TabIndex = 18;
             EraseButton.Text = "<---";
             EraseButton.UseVisualStyleBackColor = true;
@@ -251,7 +251,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(969, 516);
             Controls.Add(EraseButton);
             Controls.Add(textBoxResult);
             Controls.Add(textBoxExpression);

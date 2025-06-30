@@ -126,6 +126,11 @@ namespace Calculator
         private void buttonEqualTo_Click(object sender, EventArgs e)
         {
             endOfExpression = false;
+
+            // clearing because of weird issue happening when clicking equal multiple times
+            numbers.Clear();
+            numbersList.Clear();
+            operatorsList.Clear();
             if (textBoxExpression.Text.Length > 0)
             {
                 seperateNumAndOperators(textBoxExpression.Text);
